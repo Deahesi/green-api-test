@@ -1,0 +1,1 @@
+export type { StateInstance } from './../model/types'

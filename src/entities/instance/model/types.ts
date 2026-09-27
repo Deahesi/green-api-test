@@ -1,0 +1,1 @@
+export type StateInstance = 'notAuthorized' | 'authorized' | 'blocked' | 'starting' | 'suspended' | 'pendingPassword'
