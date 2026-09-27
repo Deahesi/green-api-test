@@ -1,6 +1,6 @@
-import axios from 'axios'
+import axios from "axios"
 
 export const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || undefined,
-  timeout: 15_000,
+	baseURL: import.meta.env.VITE_API_BASE_URL || undefined,
+	timeout: 15_000,
 })

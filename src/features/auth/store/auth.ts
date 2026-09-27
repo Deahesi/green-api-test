@@ -1,22 +1,25 @@
-import { create } from 'zustand'
+import type { Credentials } from "@/shared/types/credentials"
+import { create } from "zustand"
+import { immer } from "zustand/middleware/immer"
 
-export type AuthCredentials = {
-  idInstance: string
-  apiTokenInstance: string
+type AuthStore = {
+	accountCredentials: Credentials | null
+	setAccountCredentials: (account: Credentials) => void
+	resetAccountCredentials: () => void
 }
 
-type AuthStore = AuthCredentials & {
-  setCredentials: (credentials: AuthCredentials) => void
-  clearCredentials: () => void
-}
-
-const initialCredentials: AuthCredentials = {
-  idInstance: '',
-  apiTokenInstance: '',
-}
-
-export const useAuthStore = create<AuthStore>()((set) => ({
-  ...initialCredentials,
-  setCredentials: (credentials) => set(credentials),
-  clearCredentials: () => set(initialCredentials),
-}))
+export const useAuthStore = create<AuthStore>()(
+	immer((set) => ({
+		accountCredentials: null,
+		setAccountCredentials: (payload: Credentials) => {
+			set((state) => {
+				state.accountCredentials = payload
+			})
+		},
+		resetAccountCredentials: () => {
+			set((state) => {
+				state.accountCredentials = null
+			})
+		},
+	})),
+)
