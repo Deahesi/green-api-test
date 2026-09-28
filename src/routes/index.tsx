@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { accountQueries } from "@/entities/account/queries/account.queries"
+import { getAccountSettingsBodySchema } from "@/entities/account/schemas/account.schema"
 import { useAuthStore } from "@/features/auth/store/auth"
 import type { Credentials } from "@/shared/types/credentials"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useForm } from "react-hook-form"
@@ -18,7 +20,17 @@ function LoginPage() {
 		(state) => state.setAccountCredentials,
 	)
 
-	const { register, handleSubmit } = useForm<Credentials>()
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<Credentials>({
+		resolver: zodResolver(getAccountSettingsBodySchema),
+		defaultValues: {
+			apiTokenInstance: "",
+			idInstance: "",
+		},
+	})
 
 	const getAccountMutation = useMutation({
 		mutationFn: async (payload: Credentials) => {
@@ -45,11 +57,15 @@ function LoginPage() {
 					{...register("apiTokenInstance")}
 					label="API токен"
 					placeholder="3431..."
+					aria-invalid={!!errors.apiTokenInstance}
+					description={errors.apiTokenInstance?.message}
 				/>
 				<Input
 					{...register("idInstance")}
 					label="Instance ID"
 					placeholder="5367..."
+					aria-invalid={!!errors.idInstance}
+					description={errors.idInstance?.message}
 				/>
 				<Button
 					loading={getAccountMutation.isPending}
