@@ -7,9 +7,10 @@ export const accountApi = {
 	getTelegramAccountInfo: async ({
 		idInstance,
 		apiTokenInstance,
+		apiUrl,
 	}: Credentials): Promise<AccountData> => {
 		const response = await apiClient.get<AccountData>(
-			`/waInstance${idInstance}/getAccountSettings/${apiTokenInstance}`,
+			`${apiUrl}/waInstance${idInstance}/getAccountSettings/${apiTokenInstance}`,
 		)
 		return response.data
 	},

@@ -10,6 +10,7 @@ export const accountQueries = {
 				"data",
 				credentials?.idInstance,
 				credentials?.apiTokenInstance,
+				credentials?.apiUrl
 			],
 
 			queryFn: credentials

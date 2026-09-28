@@ -27,6 +27,7 @@ function LoginPage() {
 	} = useForm<Credentials>({
 		resolver: zodResolver(getAccountSettingsBodySchema),
 		defaultValues: {
+			apiUrl: "",
 			apiTokenInstance: "",
 			idInstance: "",
 		},
@@ -53,6 +54,13 @@ function LoginPage() {
 				onSubmit={handleSubmit((data) => getAccountMutation.mutate(data))}
 				className="flex flex-col gap-3"
 			>
+				<Input
+					{...register("apiUrl")}
+					label="API Url"
+					placeholder="https://..."
+					aria-invalid={!!errors.apiUrl}
+					description={errors.apiUrl?.message}
+				/>
 				<Input
 					{...register("apiTokenInstance")}
 					label="API токен"
