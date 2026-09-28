@@ -15,21 +15,21 @@ export const accountApi = {
 		return response.data
 	},
 	checkAccount: async (
-		{ idInstance, apiTokenInstance }: Credentials,
+		{ idInstance, apiTokenInstance, apiUrl }: Credentials,
 		payload: CheckAccountBody,
 	): Promise<CheckAccountResponse> => {
 		const response = await apiClient.post<CheckAccountResponse>(
-			`/waInstance${idInstance}/checkAccount/${apiTokenInstance}`,
+			`${apiUrl}/waInstance${idInstance}/checkAccount/${apiTokenInstance}`,
 			payload,
 		)
 		return response.data
 	},
 	getContactInfo: async (
-		{ idInstance, apiTokenInstance }: Credentials,
+		{ idInstance, apiTokenInstance, apiUrl }: Credentials,
 		chatId: string,
 	): Promise<ContactData> => {
 		const response = await apiClient.post<ContactData>(
-			`/waInstance${idInstance}/getContactInfo/${apiTokenInstance}`,
+			`${apiUrl}/waInstance${idInstance}/getContactInfo/${apiTokenInstance}`,
 			{
 				chatId,
 			},

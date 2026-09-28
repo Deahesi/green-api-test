@@ -7,19 +7,20 @@ export const chatApi = {
 	getAllChats: async ({
 		idInstance,
 		apiTokenInstance,
+		apiUrl
 	}: Credentials): Promise<Chat[]> => {
 		const response = await apiClient.get<Chat[]>(
-			`/waInstance${idInstance}/getChats/${apiTokenInstance}`,
+			`${apiUrl}/waInstance${idInstance}/getChats/${apiTokenInstance}`,
 		)
 		return response.data
 	},
 	getChatStory: async (
-		{ idInstance, apiTokenInstance }: Credentials,
+		{ idInstance, apiTokenInstance, apiUrl }: Credentials,
 		chatId: string,
 		count: number,
 	): Promise<Message[]> => {
 		const response = await apiClient.post<Message[]>(
-			`/waInstance${idInstance}/getChatHistory/${apiTokenInstance}`,
+			`${apiUrl}/waInstance${idInstance}/getChatHistory/${apiTokenInstance}`,
 			{
 				count,
 				chatId,
@@ -28,11 +29,11 @@ export const chatApi = {
 		return response.data.toReversed()
 	},
 	sendMessage: async (
-		{ idInstance, apiTokenInstance }: Credentials,
+		{ idInstance, apiTokenInstance, apiUrl }: Credentials,
 		body: SendMessageBody,
 	): Promise<SendMessageResponse> => {
 		const response = await apiClient.post<SendMessageResponse>(
-			`/waInstance${idInstance}/sendMessage/${apiTokenInstance}`,
+			`${apiUrl}/waInstance${idInstance}/sendMessage/${apiTokenInstance}`,
 			body,
 		)
 		return response.data

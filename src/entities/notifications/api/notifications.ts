@@ -13,11 +13,11 @@ const receiveTimeout =
 
 export const notificationsApi = {
 	pollNotification: async (
-		{ idInstance, apiTokenInstance }: Credentials,
+		{ idInstance, apiTokenInstance, apiUrl }: Credentials,
 		signal: AbortSignal,
 	): Promise<Notification | null> => {
 		const response = await apiClient.get<Notification | null>(
-			`/waInstance${idInstance}/receiveNotification/${apiTokenInstance}`,
+			`${apiUrl}/waInstance${idInstance}/receiveNotification/${apiTokenInstance}`,
 			{
 				params: { receiveTimeout },
 				timeout: (receiveTimeout + 10) * 1000,
@@ -28,11 +28,11 @@ export const notificationsApi = {
 	},
 
 	deleteNotification: async (
-		{ idInstance, apiTokenInstance }: Credentials,
+		{ idInstance, apiTokenInstance, apiUrl }: Credentials,
 		receiptId: number,
 	): Promise<DeleteNotificationResponse | null> => {
 		const response = await apiClient.delete<DeleteNotificationResponse>(
-			`/waInstance${idInstance}/deleteNotification/${apiTokenInstance}/${receiptId}`,
+			`${apiUrl}/waInstance${idInstance}/deleteNotification/${apiTokenInstance}/${receiptId}`,
 		)
 		return response.data
 	},
